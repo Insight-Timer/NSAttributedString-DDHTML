@@ -371,10 +371,34 @@
         return nil;
     
     hexString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    if ([self hexValuesWithNames][hexString.lowercaseString].length) {
+        hexString = [self hexValuesWithNames][hexString.lowercaseString];
+    }
     char *p;
     NSUInteger hexValue = strtoul([hexString cStringUsingEncoding:NSUTF8StringEncoding], &p, 16);
-
+    
     return [UIColor colorWithRed:((hexValue & 0xff0000) >> 16) / 255.0 green:((hexValue & 0xff00) >> 8) / 255.0 blue:(hexValue & 0xff) / 255.0 alpha:1.0];
+}
+
+// The 16 most basic web colours, copied from https://en.wikipedia.org/wiki/Web_colors
++ (NSDictionary<NSString *, NSString *> *)hexValuesWithNames {
+    return @{@"white": @"FFFFFF",
+             @"silver": @"C0C0C0",
+             @"gray": @"808080",
+             @"black": @"000000",
+             @"red": @"FF0000",
+             @"maroon": @"800000",
+             @"yellow": @"FFFF00",
+             @"olive": @"808000",
+             @"lime": @"00FF00",
+             @"green": @"008000",
+             @"aqua": @"00FFFF",
+             @"teal": @"008080",
+             @"blue": @"0000FF",
+             @"navy": @"000080",
+             @"fuchsia": @"FF00FF",
+             @"purple": @"800080"
+             };
 }
 
 @end
